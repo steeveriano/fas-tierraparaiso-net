@@ -41,7 +41,7 @@ Servidor de autenticación externa (FAS) para el portal cautivo WiFi de El Edén
 - eden-zona1 (completar con nombres reales)
 
 ## Integraciones
-- Twilio WhatsApp OTP
+- GHL WhatsApp OTP (GoHighLevel)
 - Supabase (proyecto ducujnpbkikfylwzylet, São Paulo)
 - GHL CRM (agente Emma)
 
