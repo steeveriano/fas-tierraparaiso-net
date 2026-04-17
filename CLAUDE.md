@@ -15,7 +15,7 @@ Servidor de autenticación externa (FAS) para el portal cautivo WiFi de El Edén
 2. Reyee intercepta y redirige a: https://wifi.tierraparaiso.net/portal?gw_address=X&gw_port=X&gw_id=X&mac=X&ip=X&url=X
 3. FAS muestra página de bienvenida
 4. Huésped ingresa número WhatsApp
-5. FAS envía OTP vía Twilio
+5. FAS envía OTP vía GHL WhatsApp
 6. Huésped verifica OTP
 7. FAS notifica al gateway: http://gw_address:gw_port/wifidog/auth?token=X
 8. Gateway concede acceso a internet
@@ -48,12 +48,11 @@ Servidor de autenticación externa (FAS) para el portal cautivo WiFi de El Edén
 ## Variables de entorno requeridas
 PORT=3000
 NODE_ENV=production
-TWILIO_ACCOUNT_SID=
-TWILIO_AUTH_TOKEN=
-TWILIO_WHATSAPP_FROM=
 SUPABASE_URL=
 SUPABASE_SERVICE_KEY=
 GHL_API_KEY=
+GHL_LOCATION_ID=
+GHL_WHATSAPP_NUMBER=
 
 ## Deploy
 ssh root@216.238.125.237

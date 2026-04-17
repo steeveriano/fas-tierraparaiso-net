@@ -10,6 +10,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+const rateLimit = require('express-rate-limit');
+app.use('/send-otp', rateLimit({ windowMs: 60_000, max: 3, standardHeaders: true, legacyHeaders: false }));
+app.use('/verify',   rateLimit({ windowMs: 60_000, max: 10, standardHeaders: true, legacyHeaders: false }));
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
@@ -97,6 +101,7 @@ app.post('/send-otp', async (req, res) => {
     otpStore.set(whatsapp, {
       otp,
       expires: Date.now() + 5 * 60 * 1000,
+      attempts: 0,
       gw_address,
       gw_port,
       gw_id,
@@ -116,11 +121,23 @@ app.post('/verify', async (req, res) => {
   try {
     const { whatsapp, otp, gw_address, gw_port, gw_id, mac, ip } = req.body;
 
+    if (!whatsapp || !/^\d{10}$/.test(whatsapp)) {
+      return res.status(400).json({ error: 'Número WhatsApp inválido' });
+    }
+    if (!otp || !/^\d{6}$/.test(String(otp))) {
+      return res.status(400).json({ error: 'Código OTP inválido' });
+    }
+
     const stored = otpStore.get(whatsapp);
     if (!stored || stored.expires < Date.now()) {
       return res.status(400).json({ error: 'OTP expirado o no encontrado' });
     }
     if (stored.otp !== String(otp)) {
+      stored.attempts += 1;
+      if (stored.attempts >= 3) {
+        otpStore.delete(whatsapp);
+        return res.status(400).json({ error: 'Demasiados intentos fallidos. Solicita un nuevo código.' });
+      }
       return res.status(400).json({ error: 'OTP incorrecto' });
     }
 
@@ -151,7 +168,7 @@ app.post('/verify', async (req, res) => {
       console.error('[ghl-tag]', ghlErr.message);
     }
 
-    res.json({ ok: true, redirect: gwUrl });
+    res.json({ ok: true });
   } catch (err) {
     console.error('[verify]', err.message);
     res.status(500).json({ error: 'Error al verificar OTP' });
@@ -333,7 +350,7 @@ video.bg{width:100%;height:100%;object-fit:cover}
 </div>
 
 <script>
-const GW={address:'${gw_address}',port:'${gw_port}',gw_id:'${gw_id}',mac:'${mac}',ip:'${ip}',url:'${url}'};
+const GW={address:${JSON.stringify(gw_address)},port:${JSON.stringify(gw_port)},gw_id:${JSON.stringify(gw_id)},mac:${JSON.stringify(mac)},ip:${JSON.stringify(ip)},url:${JSON.stringify(url)}};
 let currentPhone='',countdownTimer=null;
 
 const boxes=document.querySelectorAll('.otp-box');
@@ -397,7 +414,7 @@ async function verifyOtp(){
     let n=3;
     const t=setInterval(()=>{
       document.getElementById('redirectCount').textContent=--n;
-      if(n<=0){clearInterval(t);window.location.href=data.redirect||GW.url||'https://www.google.com';}
+      if(n<=0){clearInterval(t);window.location.href=GW.url||'https://www.google.com';}
     },1000);
   }catch(e){
     err.style.display='block';
