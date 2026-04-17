@@ -204,12 +204,12 @@ function portalHTML({ gw_address, gw_port, gw_id, mac, ip, url, zoneBadge }) {
 html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
 .video-wrap{position:fixed;inset:0;z-index:0;background:url('/public/piscina-noche.jpg') center/cover no-repeat}
 .overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.3) 0%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.65) 100%)}
-.hero{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;padding:70px 24px 50vh;text-align:center;gap:12px}
-.hero-video{width:100%;max-width:240px;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.55);object-fit:cover;aspect-ratio:16/9;display:block}
-.steps-row{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;margin-top:2px}
-.step-item{display:flex;align-items:center;gap:5px;color:white;font-size:12px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6)}
-.step-num{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.step-arrow{color:rgba(255,255,255,.55);font-size:11px}
+.hero{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;z-index:5;padding:72px 20px 0;text-align:center;gap:10px}
+.hero-video{width:100%;max-width:220px;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.55);object-fit:cover;aspect-ratio:16/9;display:block;flex-shrink:0}
+.steps-row{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;max-width:100%;padding:0 4px}
+.step-item{display:inline-flex;align-items:center;gap:4px;color:white;font-size:11px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6);flex-shrink:0;white-space:nowrap}
+.step-num{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.step-arrow{color:rgba(255,255,255,.55);font-size:10px;flex-shrink:0}
 .btn-wa{display:inline-flex;align-items:center;gap:8px;background:white;color:#2d5a3d;border:2px solid #2d5a3d;border-radius:24px;padding:12px 22px;font-size:15px;font-weight:600;text-decoration:none;margin-top:6px;transition:background .2s,color .2s;white-space:nowrap}
 .btn-wa:hover{background:#2d5a3d;color:white}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:10;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
