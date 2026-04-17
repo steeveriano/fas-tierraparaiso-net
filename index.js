@@ -5,14 +5,15 @@ const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 const rateLimit = require('express-rate-limit');
-app.use('/send-otp', rateLimit({ windowMs: 60_000, max: 3, standardHeaders: true, legacyHeaders: false }));
-app.use('/verify',   rateLimit({ windowMs: 60_000, max: 10, standardHeaders: true, legacyHeaders: false }));
+app.use('/send-otp', rateLimit({ windowMs: 60_000, max: 3,  standardHeaders: true, legacyHeaders: false, validate: { xForwardedForHeader: false } }));
+app.use('/verify',   rateLimit({ windowMs: 60_000, max: 10, standardHeaders: true, legacyHeaders: false, validate: { xForwardedForHeader: false } }));
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -201,11 +202,14 @@ function portalHTML({ gw_address, gw_port, gw_id, mac, ip, url, zoneBadge }) {
   --brown-l:#8b7355;--border:#c5b596
 }
 html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
-.video-wrap{position:fixed;inset:0;z-index:0}
-video.bg{width:100%;height:100%;object-fit:cover}
-.video-wrap img.fallback{display:none;width:100%;height:100%;object-fit:cover;animation:kb 20s ease-in-out infinite alternate}
-.overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.55) 100%)}
-@keyframes kb{from{transform:scale(1)}to{transform:scale(1.06)}}
+.video-wrap{position:fixed;inset:0;z-index:0;background:url('/public/piscina-noche.jpg') center/cover no-repeat}
+video.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.1) 40%,rgba(0,0,0,.6) 100%)}
+.hero{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;padding:70px 24px 50vh;text-align:center;gap:14px}
+.hero-title{font-size:clamp(22px,5vw,34px);font-weight:700;color:white;text-shadow:0 2px 10px rgba(0,0,0,.55);font-family:Georgia,'Times New Roman',serif;line-height:1.3}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.9);text-shadow:0 1px 5px rgba(0,0,0,.5);font-weight:400}
+.btn-wa{display:inline-flex;align-items:center;gap:8px;background:white;color:#2d5a3d;border:2px solid #2d5a3d;border-radius:24px;padding:12px 22px;font-size:15px;font-weight:600;text-decoration:none;margin-top:4px;transition:background .2s,color .2s;white-space:nowrap}
+.btn-wa:hover{background:#2d5a3d;color:white}
 .topbar{position:fixed;top:0;left:0;right:0;z-index:10;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
 .badge{background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 12px;font-size:11px;color:white;letter-spacing:.5px}
 .badge.gold{background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.4);color:#f0d060}
@@ -250,12 +254,15 @@ video.bg{width:100%;height:100%;object-fit:cover}
 <body>
 
 <div class="video-wrap">
-  <video class="bg" autoplay muted loop playsinline
-    onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <video class="bg" autoplay muted loop playsinline>
     <source src="/public/background.mp4" type="video/mp4">
   </video>
-  <img class="fallback" src="/public/piscina-noche.jpg" alt="">
   <div class="overlay"></div>
+  <div class="hero">
+    <h1 class="hero-title">Bienvenido a<br>El Edén Hotel Resort</h1>
+    <p class="hero-sub">Conéctate al WiFi gratis</p>
+    <a class="btn-wa" href="https://wa.me/573334318008?text=Hola%2C%20quiero%20conectarme%20al%20WiFi%20de%20El%20Ed%C3%A9n" target="_blank" rel="noopener noreferrer">📶 Escríbenos para activar tu WiFi</a>
+  </div>
 </div>
 
 <div class="topbar">
