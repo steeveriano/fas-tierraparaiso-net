@@ -268,7 +268,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <span class="step-arrow">→</span>
       <div class="step-item"><span class="step-num">③</span> ¡Navega gratis!</div>
     </div>
-    <a class="btn-wa" href="https://wa.me/573334318008?text=Hola%2C%20quiero%20conectarme%20al%20WiFi%20de%20El%20Ed%C3%A9n" target="_blank" rel="noopener noreferrer">📶 Escríbenos para activar tu WiFi</a>
+    <a class="btn-wa" href="https://wa.me/573334318008?text=Hola%2C%20quiero%20conectarme%20al%20WiFi%20con%20tierraparaiso.net" target="_blank" rel="noopener noreferrer">📶 Escríbenos para activar tu WiFi</a>
   </div>
 </div>
 
