@@ -36,6 +36,128 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', ts: new Date().toISOString() });
 });
 
+// ── GHL API helpers ──────────────────────────────────────────────────
+
+async function ghlRequest(method, endpoint, body) {
+  const res = await fetch(`https://services.leadconnectorhq.com${endpoint}`, {
+    method,
+    headers: {
+      'Authorization': `Bearer ${process.env.GHL_API_KEY}`,
+      'Content-Type': 'application/json',
+      'Version': '2021-04-15',
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`GHL ${method} ${endpoint} → ${res.status}: ${text}`);
+  }
+  return res.json();
+}
+
+async function ghlUpsertContact(phone) {
+  const data = await ghlRequest('POST', '/contacts/upsert', {
+    locationId: process.env.GHL_LOCATION_ID,
+    phone,
+    source: 'WiFi El Edén',
+  });
+  return data.contact?.id ?? data.id;
+}
+
+async function ghlSendWhatsApp(contactId, message) {
+  await ghlRequest('POST', '/conversations/messages', {
+    type: 'WhatsApp',
+    contactId,
+    message,
+  });
+}
+
+async function ghlAddTag(contactId, tag) {
+  await ghlRequest('POST', `/contacts/${contactId}/tags`, { tags: [tag] });
+}
+
+// POST /send-otp
+app.post('/send-otp', async (req, res) => {
+  try {
+    const { whatsapp, gw_address, gw_port, gw_id, mac, ip } = req.body;
+
+    if (!whatsapp || !/^\d{10}$/.test(whatsapp)) {
+      return res.status(400).json({ error: 'Número WhatsApp inválido' });
+    }
+
+    const otp = String(crypto.randomInt(100000, 999999));
+    const phone = `+57${whatsapp}`;
+
+    const contactId = await ghlUpsertContact(phone);
+    await ghlSendWhatsApp(
+      contactId,
+      `Tu código WiFi de El Edén es: *${otp}*. Válido por 5 minutos. 📶`
+    );
+
+    otpStore.set(whatsapp, {
+      otp,
+      expires: Date.now() + 5 * 60 * 1000,
+      gw_address,
+      gw_port,
+      gw_id,
+      mac,
+      ip,
+    });
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[send-otp]', err.message);
+    res.status(500).json({ error: 'Error al enviar OTP' });
+  }
+});
+
+// POST /verify
+app.post('/verify', async (req, res) => {
+  try {
+    const { whatsapp, otp, gw_address, gw_port, gw_id, mac, ip } = req.body;
+
+    const stored = otpStore.get(whatsapp);
+    if (!stored || stored.expires < Date.now()) {
+      return res.status(400).json({ error: 'OTP expirado o no encontrado' });
+    }
+    if (stored.otp !== String(otp)) {
+      return res.status(400).json({ error: 'OTP incorrecto' });
+    }
+
+    otpStore.delete(whatsapp);
+    const token = crypto.randomUUID();
+    const phone = `+57${whatsapp}`;
+
+    // Notificar al gateway WiFiDog
+    const gwUrl = `http://${gw_address}:${gw_port}/wifidog/auth?token=${token}`;
+    await fetch(gwUrl).catch(err => console.error('[gateway]', err.message));
+
+    // Registrar sesión en Supabase
+    const { error: dbError } = await supabase.from('wifi_sessions').insert({
+      mac,
+      ip,
+      gw_id,
+      whatsapp: phone,
+      token,
+      authorized_at: new Date().toISOString(),
+    });
+    if (dbError) console.error('[supabase]', dbError.message);
+
+    // Actualizar contacto en GHL con tag wifi-eden
+    try {
+      const contactId = await ghlUpsertContact(phone);
+      await ghlAddTag(contactId, 'wifi-eden');
+    } catch (ghlErr) {
+      console.error('[ghl-tag]', ghlErr.message);
+    }
+
+    res.json({ ok: true, redirect: gwUrl });
+  } catch (err) {
+    console.error('[verify]', err.message);
+    res.status(500).json({ error: 'Error al verificar OTP' });
+  }
+});
+
 // GET /portal — página principal del captive portal
 app.get('/portal', (req, res) => {
   const {
