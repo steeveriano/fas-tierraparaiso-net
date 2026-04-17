@@ -198,33 +198,30 @@ function portalHTML({ gw_address, gw_port, gw_id, mac, ip, url, zoneBadge }) {
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cream:#faf6ee;--green:#2d5a3d;--green-dk:#1a3a2a;
-  --gold:#d4af37;--brown:#3d2b1f;--brown-m:#6b5a3e;
-  --brown-l:#8b7355;--border:#c5b596
+  --brown:#3d2b1f;--brown-m:#6b5a3e;--brown-l:#8b7355;--border:#c5b596
 }
-html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden}
-.video-wrap{position:fixed;inset:0;z-index:0;background:url('/public/piscina-noche.jpg') center/cover no-repeat}
-.overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.3) 0%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.65) 100%)}
-.hero{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;z-index:5;padding:72px 20px 0;text-align:center;gap:10px}
-.hero-logos{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:2px}
-.hero-logo-tp{height:52px;width:auto;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
-.hero-logo-div{width:1px;height:44px;background:rgba(255,255,255,.45)}
-.hero-logo-eden{height:60px;width:auto;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
-.hero-video{width:100%;max-width:220px;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.55);object-fit:cover;aspect-ratio:16/9;display:block;flex-shrink:0}
-.steps-row{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;max-width:100%;padding:0 4px}
-.step-item{display:inline-flex;align-items:center;gap:4px;color:white;font-size:11px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6);flex-shrink:0;white-space:nowrap}
-.step-num{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-.step-arrow{color:rgba(255,255,255,.55);font-size:10px;flex-shrink:0}
-.btn-wa{display:inline-flex;align-items:center;gap:8px;background:white;color:#2d5a3d;border:2px solid #2d5a3d;border-radius:24px;padding:12px 22px;font-size:15px;font-weight:600;text-decoration:none;margin-top:6px;transition:background .2s,color .2s;white-space:nowrap}
-.btn-wa:hover{background:#2d5a3d;color:white}
-.topbar{position:fixed;top:0;left:0;right:0;z-index:10;padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-.badge{background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 12px;font-size:11px;color:white;letter-spacing:.5px}
-.badge.gold{background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.4);color:#f0d060}
-.card{position:fixed;bottom:0;left:0;right:0;z-index:10;background:rgba(250,246,238,.97);backdrop-filter:blur(16px);border-radius:24px 24px 0 0;padding:28px 24px 40px;display:flex;flex-direction:column;gap:18px;max-height:88vh;overflow-y:auto}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-y:auto}
+body{display:flex;flex-direction:column}
+/* ── SECCIÓN 1: HERO ── */
+.hero{position:relative;height:40vh;min-height:210px;flex-shrink:0;overflow:hidden;background:url('/public/piscina-noche.jpg') center/cover no-repeat}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.35),rgba(0,0,0,.6))}
+.hero-content{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;gap:8px;text-align:center}
+.hero-title{font-size:clamp(17px,4.5vw,26px);font-weight:700;color:white;text-shadow:0 2px 8px rgba(0,0,0,.5);font-family:Georgia,'Times New Roman',serif;line-height:1.25}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.88);text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.steps-row{display:flex;align-items:center;gap:4px;overflow-x:auto;max-width:100%;padding:0 2px}
+.step-item{display:inline-flex;align-items:center;gap:4px;color:white;font-size:11px;font-weight:500;white-space:nowrap;flex-shrink:0;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.step-num{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.step-arr{color:rgba(255,255,255,.5);font-size:10px;flex-shrink:0}
+.btn-wa{display:inline-flex;align-items:center;gap:8px;background:white;color:var(--green);border:2px solid var(--green);border-radius:22px;padding:10px 20px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:background .2s,color .2s}
+.btn-wa:hover{background:var(--green);color:white}
+/* ── SECCIÓN 2: FORMULARIO ── */
+.form-section{flex:1;background:var(--cream);display:flex;flex-direction:column;padding:24px 20px 32px;gap:16px}
 .logos{display:flex;align-items:center;justify-content:center;gap:14px}
-.logo-tp{height:28px;width:auto;object-fit:contain}
-.logo-div{width:1px;height:26px;background:var(--border)}
-.logo-eden{height:32px;width:auto;object-fit:contain}
-.hotel-name{font-size:16px;font-weight:600;color:var(--brown);font-family:Georgia,'Times New Roman',serif;text-align:center;line-height:1.3}
+.logo-tp{height:36px;width:auto;object-fit:contain}
+.logo-div{width:1px;height:30px;background:var(--border)}
+.logo-eden{height:42px;width:auto;object-fit:contain}
+.hotel-name{font-size:17px;font-weight:600;color:var(--brown);font-family:Georgia,'Times New Roman',serif;text-align:center;line-height:1.3}
 .hotel-loc{font-size:10px;color:var(--brown-l);letter-spacing:2px;text-transform:uppercase;text-align:center}
 .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
 .form-group{display:flex;flex-direction:column;gap:6px}
@@ -236,10 +233,10 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .phone-input::placeholder{color:#bba98a}
 .hint{font-size:11px;color:var(--brown-l)}
 .otp-wrap{display:flex;gap:8px;justify-content:center}
-.otp-box{width:46px;height:54px;border:2px solid var(--border);border-radius:10px;background:white;font-size:22px;font-weight:700;color:var(--brown);text-align:center;outline:none;transition:border-color .2s;caret-color:transparent}
+.otp-box{width:44px;height:52px;border:2px solid var(--border);border-radius:10px;background:white;font-size:22px;font-weight:700;color:var(--brown);text-align:center;outline:none;transition:border-color .2s;caret-color:transparent}
 .otp-box:focus{border-color:var(--green)}
 .otp-box.filled{border-color:var(--green);background:#f0f7f3;color:var(--green)}
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--green),var(--green-dk));color:white;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.3px;transition:opacity .2s,transform .1s;font-family:inherit}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--green),var(--green-dk));color:white;border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .2s,transform .1s;font-family:inherit}
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .wa-icon{width:20px;height:20px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
@@ -247,63 +244,54 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .action-link{background:none;border:none;cursor:pointer;font-size:12px;color:var(--brown-l);font-family:inherit;text-decoration:underline}
 .action-link:hover{color:var(--green)}
 .action-link:disabled{opacity:.4;cursor:not-allowed;text-decoration:none}
-.footer-brand{font-size:10px;color:var(--brown-l);text-align:center;line-height:1.7}
-.footer-brand strong{color:var(--brown-m)}
 .info-box{background:rgba(45,90,61,.07);border:1px solid rgba(45,90,61,.15);border-radius:10px;padding:12px;font-size:12px;color:var(--brown-m);line-height:1.5}
 .error-msg{font-size:12px;color:#c0392b;display:none}
 .success-content{display:flex;flex-direction:column;align-items:center;gap:16px;padding:12px 0}
-.checkmark{width:68px;height:68px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:white}
-.step{display:none;flex-direction:column;gap:18px}
+.checkmark{width:64px;height:64px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white}
+.footer-brand{font-size:10px;color:var(--brown-l);text-align:center;line-height:1.7;margin-top:auto;padding-top:8px}
+.footer-brand strong{color:var(--brown-m)}
+.step{display:none;flex-direction:column;gap:16px}
 .step.active{display:flex}
 </style>
 </head>
 <body>
 
-<div class="video-wrap">
+<!-- SECCIÓN 1: HERO -->
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="/public/background.mp4" type="video/mp4">
+  </video>
   <div class="overlay"></div>
-  <div class="hero">
-    <div class="hero-logos">
-      <img class="hero-logo-tp" src="/public/logo-tp.png" alt="tierraparaiso.net"
-        onerror="this.outerHTML='<span style=\'font-size:16px;font-weight:700;color:white;text-shadow:0 2px 6px rgba(0,0,0,.5)\'>tierraparaiso.net</span>'">
-      <div class="hero-logo-div"></div>
-      <img class="hero-logo-eden" src="/public/logo-eden.png" alt="El Edén Hotel Resort"
-        onerror="this.outerHTML='<span style=\'font-size:15px;font-weight:700;color:white;text-shadow:0 2px 6px rgba(0,0,0,.5)\'>EL EDÉN</span>'">
-    </div>
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="/public/background.mp4" type="video/mp4">
-    </video>
+  <div class="hero-content">
+    <h1 class="hero-title">Bienvenido a El Edén Hotel Resort</h1>
+    <p class="hero-sub">WiFi gratuito para huéspedes</p>
     <div class="steps-row">
-      <div class="step-item"><span class="step-num">①</span> Ingresa tu WhatsApp</div>
-      <span class="step-arrow">→</span>
-      <div class="step-item"><span class="step-num">②</span> Recibe el código</div>
-      <span class="step-arrow">→</span>
-      <div class="step-item"><span class="step-num">③</span> ¡Navega gratis!</div>
+      <div class="step-item"><span class="step-num">①</span>&nbsp;Escríbenos</div>
+      <span class="step-arr">→</span>
+      <div class="step-item"><span class="step-num">②</span>&nbsp;Ingresa tu número</div>
+      <span class="step-arr">→</span>
+      <div class="step-item"><span class="step-num">③</span>&nbsp;Recibe código</div>
+      <span class="step-arr">→</span>
+      <div class="step-item"><span class="step-num">④</span>&nbsp;Navega</div>
     </div>
     <a class="btn-wa" href="https://wa.me/573334318008?text=Hola%2C%20quiero%20conectarme%20al%20WiFi%20con%20tierraparaiso.net" target="_blank" rel="noopener noreferrer">📶 Escríbenos para activar tu WiFi</a>
   </div>
-</div>
+</section>
 
-<div class="topbar">
-  <span class="badge">📶 WiFi Gratis</span>
-  <span class="badge gold">${zoneBadge}</span>
-</div>
-
-<div class="card">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-    <div class="logos">
-      <img class="logo-tp" src="/public/logo-tp.png" alt="tierraparaiso.net"
-        onerror="this.outerHTML='<span style=\\'font-size:12px;font-weight:700;color:#2d5a3d\\'>tierraparaiso.net</span>'">
-      <div class="logo-div"></div>
-      <img class="logo-eden" src="/public/logo-eden.png" alt="El Edén"
-        onerror="this.outerHTML='<span style=\\'font-size:11px;font-weight:700;color:#2d5a3d;padding:4px 6px;background:#f5f0e8;border-radius:6px\\'>EL EDÉN</span>'">
-    </div>
-    <div class="hotel-name">El Edén Hotel Resort</div>
-    <div class="hotel-loc">Santa Elena · Valle del Cauca</div>
+<!-- SECCIÓN 2: FORMULARIO -->
+<section class="form-section">
+  <div class="logos">
+    <img class="logo-tp" src="/public/logo-tp.png" alt="tierraparaiso.net"
+      onerror="this.outerHTML='<span style=\\'font-size:13px;font-weight:700;color:#2d5a3d\\'>tierraparaiso.net</span>'">
+    <div class="logo-div"></div>
+    <img class="logo-eden" src="/public/logo-eden.png" alt="El Edén"
+      onerror="this.outerHTML='<span style=\\'font-size:12px;font-weight:700;color:#2d5a3d\\'>EL EDÉN</span>'">
   </div>
-
+  <div class="hotel-name">El Edén Hotel Resort</div>
+  <div class="hotel-loc">Santa Elena · Valle del Cauca</div>
   <div class="divider"></div>
 
-  <!-- PASO 1: WhatsApp -->
+  <!-- PASO 1 -->
   <div class="step active" id="step1">
     <div class="form-group">
       <label class="form-label" for="phone">Tu número de WhatsApp</label>
@@ -319,17 +307,11 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <div class="wa-icon">💬</div>
       Enviar código por WhatsApp
     </button>
-    <div class="footer-brand">
-      Acceso WiFi cortesía de<br>
-      <strong>tierraparaiso.net</strong> · Operador de El Edén Hotel Resort
-    </div>
   </div>
 
-  <!-- PASO 2: OTP -->
+  <!-- PASO 2 -->
   <div class="step" id="step2">
-    <div class="info-box">
-      Código enviado a +57 <strong id="displayPhone"></strong> vía WhatsApp
-    </div>
+    <div class="info-box">Código enviado a +57 <strong id="displayPhone"></strong> vía WhatsApp</div>
     <div class="form-group" style="align-items:center;gap:10px">
       <label class="form-label">Código de 6 dígitos</label>
       <div class="otp-wrap" id="otpWrap">
@@ -343,36 +325,24 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       <div class="error-msg" id="otpError">Código incorrecto o expirado.</div>
       <div class="hint">El código expira en 5 minutos</div>
     </div>
-    <button class="btn" id="btnVerify" onclick="verifyOtp()" disabled>
-      ✓ Verificar y conectarme
-    </button>
+    <button class="btn" id="btnVerify" onclick="verifyOtp()" disabled>✓ Verificar y conectarme</button>
     <div class="action-row">
       <button class="action-link" onclick="goBack()">← Cambiar número</button>
-      <button class="action-link" id="btnResend" onclick="resendOtp()" disabled>
-        Reenviar (<span id="countdown">60</span>s)
-      </button>
-    </div>
-    <div class="footer-brand">
-      Acceso WiFi cortesía de<br>
-      <strong>tierraparaiso.net</strong> · Operador de El Edén Hotel Resort
+      <button class="action-link" id="btnResend" onclick="resendOtp()" disabled>Reenviar (<span id="countdown">60</span>s)</button>
     </div>
   </div>
 
-  <!-- PASO 3: Éxito -->
+  <!-- PASO 3 -->
   <div class="step" id="step3">
     <div class="success-content">
       <div class="checkmark">✓</div>
       <div class="hotel-name">¡Bienvenido a El Edén!</div>
-      <div class="hint" style="text-align:center">
-        Ya tienes acceso a internet.<br>Redirigiendo en <span id="redirectCount">3</span> segundos…
-      </div>
-    </div>
-    <div class="footer-brand">
-      Acceso WiFi cortesía de<br>
-      <strong>tierraparaiso.net</strong> · Operador de El Edén Hotel Resort
+      <div class="hint" style="text-align:center">Ya tienes acceso a internet.<br>Redirigiendo en <span id="redirectCount">3</span> segundos…</div>
     </div>
   </div>
-</div>
+
+  <div class="footer-brand">Acceso WiFi cortesía de <strong>tierraparaiso.net</strong> · Operador de El Edén Hotel Resort</div>
+</section>
 
 <script>
 const GW={address:${JSON.stringify(gw_address)},port:${JSON.stringify(gw_port)},gw_id:${JSON.stringify(gw_id)},mac:${JSON.stringify(mac)},ip:${JSON.stringify(ip)},url:${JSON.stringify(url)}};
