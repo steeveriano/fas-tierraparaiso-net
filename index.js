@@ -240,6 +240,9 @@ body{display:flex;flex-direction:column}
 .btn:active{transform:scale(.98)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .wa-icon{width:20px;height:20px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.fields-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.input-wrap.disabled{background:#f5f0e8;border-color:#ddd;opacity:.65}
+.input-wrap.disabled input{background:#f5f0e8;color:var(--brown-l);cursor:not-allowed}
 .action-row{display:flex;justify-content:space-between;font-size:12px;color:var(--brown-l)}
 .action-link{background:none;border:none;cursor:pointer;font-size:12px;color:var(--brown-l);font-family:inherit;text-decoration:underline}
 .action-link:hover{color:var(--green)}
@@ -294,11 +297,22 @@ body{display:flex;flex-direction:column}
   <!-- PASO 1 -->
   <div class="step active" id="step1">
     <div class="form-group">
-      <label class="form-label" for="phone">Tu número de WhatsApp</label>
-      <div class="input-wrap">
-        <div class="prefix">🇨🇴 +57</div>
-        <input class="phone-input" id="phone" type="tel" inputmode="numeric"
-          placeholder="300 000 0000" maxlength="10" autocomplete="tel">
+      <div class="fields-row">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <label class="form-label" for="phone">WhatsApp</label>
+          <div class="input-wrap">
+            <div class="prefix">🇨🇴 +57</div>
+            <input class="phone-input" id="phone" type="tel" inputmode="numeric"
+              placeholder="300 000 0000" maxlength="10" autocomplete="tel">
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <label class="form-label">N.° Reserva</label>
+          <div class="input-wrap disabled">
+            <input style="flex:1;padding:12px;font-size:14px;border:none;outline:none;font-family:inherit;width:100%"
+              type="text" placeholder="Próximamente" disabled>
+          </div>
+        </div>
       </div>
       <div class="error-msg" id="phoneError">Número inválido. Ingresa 10 dígitos colombianos.</div>
       <div class="hint">Recibirás un código de verificación por WhatsApp</div>
