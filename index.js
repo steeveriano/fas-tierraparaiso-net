@@ -205,6 +205,10 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .video-wrap{position:fixed;inset:0;z-index:0;background:url('/public/piscina-noche.jpg') center/cover no-repeat}
 .overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.3) 0%,rgba(0,0,0,.1) 50%,rgba(0,0,0,.65) 100%)}
 .hero{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;z-index:5;padding:72px 20px 0;text-align:center;gap:10px}
+.hero-logos{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:2px}
+.hero-logo-tp{height:52px;width:auto;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.hero-logo-div{width:1px;height:44px;background:rgba(255,255,255,.45)}
+.hero-logo-eden{height:60px;width:auto;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
 .hero-video{width:100%;max-width:220px;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.55);object-fit:cover;aspect-ratio:16/9;display:block;flex-shrink:0}
 .steps-row{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;max-width:100%;padding:0 4px}
 .step-item{display:inline-flex;align-items:center;gap:4px;color:white;font-size:11px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.6);flex-shrink:0;white-space:nowrap}
@@ -258,6 +262,13 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 <div class="video-wrap">
   <div class="overlay"></div>
   <div class="hero">
+    <div class="hero-logos">
+      <img class="hero-logo-tp" src="/public/logo-tp.png" alt="tierraparaiso.net"
+        onerror="this.outerHTML='<span style=\'font-size:16px;font-weight:700;color:white;text-shadow:0 2px 6px rgba(0,0,0,.5)\'>tierraparaiso.net</span>'">
+      <div class="hero-logo-div"></div>
+      <img class="hero-logo-eden" src="/public/logo-eden.png" alt="El Edén Hotel Resort"
+        onerror="this.outerHTML='<span style=\'font-size:15px;font-weight:700;color:white;text-shadow:0 2px 6px rgba(0,0,0,.5)\'>EL EDÉN</span>'">
+    </div>
     <video class="hero-video" autoplay muted loop playsinline>
       <source src="/public/background.mp4" type="video/mp4">
     </video>
